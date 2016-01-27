@@ -101,14 +101,15 @@ DEL=rm
     ${DEBUG} ${cc65dir}/ca65 ${ASM_FLAGS}          -o ${OBJ} ${SRC}
     ${DEBUG} ${cc65dir}/ld65 ${LNK_FLAGS} -o ${BIN}   ${OBJ}
 
-# Copy to .DKS
+# Copy to .DSK
     # We need to uppercase the file name for a DOS 3.3 DSK
     # The ${1,,} is a Bash 4.0 uppercase extension so we can't use that
     # Likewise, GNU sed 's/.*/\L&/g' doesn't work on OSX (BSD)
     A2FILE=`echo "${FILE}" | awk '{print toupper($0)}'`
     ${COPY}  empty.dsk ${FILE}.dsk
-    # If you want to keep an existing disk
-    # you will want to first remove the old version on .DSK
+
+    # If you want to keep an existing disk then you'll
+    # will want to first remove the old file on the .DSK image
     #${DEBUG} a2rm      ${FILE}.dsk ${A2FILE}
     ${DEBUG} a2in -r b ${FILE}.dsk ${A2FILE} ${BIN}
 
